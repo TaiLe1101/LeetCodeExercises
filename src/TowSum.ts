@@ -7,16 +7,14 @@
 */
 
 function twoSum(nums: number[], target: number): number[] {
-  const length: number = nums.length;
+  const numMap: { [key: number]: number } = {};
 
-  if (nums.length <= 1) return [];
-
-  for (let i: number = 0; i < length; i++) {
-    for (let j: number = i + 1; j < length; j++) {
-      if (nums[i] + nums[j] === target) {
-        return [i, j];
-      }
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+    if (complement in numMap) {
+      return [numMap[complement], i];
     }
+    numMap[nums[i]] = i;
   }
 
   return [];
@@ -25,10 +23,19 @@ function twoSum(nums: number[], target: number): number[] {
 console.log('twoSum() ->', twoSum([3, 2, 4], 6));
 
 /*
-    [2,15,11,7], target = 9
-    1: i = 0; 
-        1.1: j = 1; nums[i] = 2; nums[j] = 15; 2 + 15 = 17; => != 9;
-        1.2: j = 2; nums[i] = 2; nums[j] = 11; 2 + 11 = 13; => != 9;
-        1.3: j = 3; nums[i] = 2; nums[j] = 7; 2 + 7 = 9; => == 9; return
+    [3,2,4], target = 6, numMap = {}
+    1: i = 0; complement = target - nums[i] -> complement = 6 - 3 -> complement = 3; false; numMap[nums[i]] = i -> numMap[3] = 0;
+
+    numMap = {
+        3:0
+    }
+    2: i = 1; complement = target - nums[i] -> complement = 6 - 2 -> complement = 4; false; numMap[nums[i]] = i -> numMap[2] = 1;
+    
+    numMap = {
+        3:0,
+        2:1,
+    }
+    3: i = 2; complement = target - nums[i] -> complement = 6 - 4 -> complement = 2; true;
+        return [numMap[complement],i] -> return [numMap[2],2] -> return [1,2];
     
  */
