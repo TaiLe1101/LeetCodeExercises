@@ -1,0 +1,14 @@
+{
+  "name": "LeetCode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/TaiLe1101/LeetCodeExercises.git",
+  "author": "TaiLe1101 <taic21a.th1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
