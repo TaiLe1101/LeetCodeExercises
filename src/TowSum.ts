@@ -20,8 +20,6 @@ function twoSum(nums: number[], target: number): number[] {
   return [];
 }
 
-console.log('twoSum() ->', twoSum([3, 2, 4], 6));
-
 /*
     [3,2,4], target = 6, numMap = {}
     1: i = 0; complement = target - nums[i] -> complement = 6 - 3 -> complement = 3; false; numMap[nums[i]] = i -> numMap[3] = 0;
