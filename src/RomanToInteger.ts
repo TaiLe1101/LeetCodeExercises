@@ -28,11 +28,7 @@
  */
 
 function romanToInt(s: string): number {
-  interface RomanType {
-    [key: string]: number;
-  }
-
-  const ROMAN_CHAR: RomanType = {
+  const ROMAN_CHAR: { [key: string]: number } = {
     I: 1,
     V: 5,
     X: 10,
@@ -41,24 +37,20 @@ function romanToInt(s: string): number {
     D: 500,
     M: 1000,
   };
-  let sum = 0;
 
-  if (s) {
-    const stringSlice: string[] = s.trim().split('');
-    const length: number = stringSlice.length;
+  let sum: number = 0;
+  let prevValue: number = 0;
 
-    for (let i = 0; i < length; i++) {
-      if (
-        (stringSlice[i] === 'X' && (stringSlice[i + 1] === 'L' || stringSlice[i + 1] === 'C')) ||
-        (stringSlice[i] === 'I' && (stringSlice[i + 1] === 'V' || stringSlice[i + 1] === 'X')) ||
-        (stringSlice[i] === 'C' && (stringSlice[i + 1] === 'D' || stringSlice[i + 1] === 'M'))
-      ) {
-        sum += ROMAN_CHAR[stringSlice[i + 1]] - ROMAN_CHAR[stringSlice[i]];
-        i++;
-      } else {
-        sum += ROMAN_CHAR[stringSlice[i]];
-      }
+  for (let i = s.length - 1; i >= 0; i--) {
+    const currValue = ROMAN_CHAR[s[i]];
+
+    if (currValue >= prevValue) {
+      sum += currValue;
+    } else {
+      sum -= currValue;
     }
+
+    prevValue = currValue;
   }
 
   return sum;
