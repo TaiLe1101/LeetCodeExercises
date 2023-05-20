@@ -8,6 +8,7 @@
 class ListNode {
   val: number;
   next: ListNode | null;
+
   constructor(val?: number, next?: ListNode | null) {
     this.val = val === undefined ? 0 : val;
     this.next = next === undefined ? null : next;
@@ -15,21 +16,41 @@ class ListNode {
 }
 
 function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
-  let resultList: ListNode;
-  if (l1 && l2) {
-    let i = 0;
-    while (l1 || l2) {
-      if (l1 && l2) {
-        resultList = new ListNode(l1.val + l2.val);
-      }
-      if (l1) l1 = l1.next;
-      if (l2) l2 = l2.next;
+  let dummyHead = new ListNode();
+  let currentNode = dummyHead;
+  let carry = 0;
+
+  while (l1 || l2) {
+    const val1 = l1 !== null ? l1.val : 0;
+    const val2 = l2 !== null ? l2.val : 0;
+
+    const sum = val1 + val2 + carry;
+    carry = Math.floor(sum / 10);
+    const digit = sum % 10;
+
+    currentNode.next = new ListNode(digit);
+    currentNode = currentNode.next;
+
+    if (l1 !== null) {
+      l1 = l1.next;
+    }
+    if (l2 !== null) {
+      l2 = l2.next;
     }
   }
 
-  return null;
+  if (carry > 0) {
+    currentNode.next = new ListNode(carry);
+  }
+
+  return dummyHead.next;
 }
 
+/**
+  Input: l1 = [2,4,3], l2 = [5,6,4]
+  Output: [7,0,8]
+  Explanation: 342 + 465 = 807.
+*/
 const l1 = new ListNode(2);
 l1.next = new ListNode(4);
 l1.next.next = new ListNode(3);
@@ -38,7 +59,5 @@ const l2 = new ListNode(5);
 l2.next = new ListNode(6);
 l2.next.next = new ListNode(4);
 
-addTwoNumbers(l1, l2);
-
-// l1: [2,4,3], l2: [5,6,4]
-//
+const sum = addTwoNumbers(l1, l2);
+console.log('sum ->', sum);
