@@ -5,28 +5,38 @@
 
 */
 
-function longestCommonPrefix(strs: string[]): string {
-  if (strs.length <= 0) {
+function longestCommonPrefix(strings: string[]): string {
+  if (strings.length === 0) {
     return '';
   }
 
-  let prefixString: string = strs[0];
+  return findLongestCommonPrefix(strings, 0, strings.length - 1);
+}
 
-  for (let i: number = 1; i < strs.length; i++) {
-    const currentString: string = strs[i];
-
-    let j: number = 0;
-    while (j < prefixString.length && j < currentString.length && prefixString[j] === currentString[j]) {
-      j++;
-    }
-
-    prefixString = currentString.substring(0, j);
-    if (prefixString.length <= 0) {
-      return '';
-    }
+function findLongestCommonPrefix(strings: string[], start: number, end: number): string {
+  if (start === end) {
+    return strings[start];
   }
 
-  return prefixString;
+  const mid = Math.floor((start + end) / 2);
+  const leftPrefix = findLongestCommonPrefix(strings, start, mid);
+  const rightPrefix = findLongestCommonPrefix(strings, mid + 1, end);
+
+  return commonPrefix(leftPrefix, rightPrefix);
+}
+
+function commonPrefix(str1: string, str2: string): string {
+  const minLength = Math.min(str1.length, str2.length);
+
+  let prefix = '';
+  for (let i = 0; i < minLength; i++) {
+    if (str1[i] !== str2[i]) {
+      break;
+    }
+    prefix += str1[i];
+  }
+
+  return prefix;
 }
 
 const strs = ['flower', 'flow', 'flight'];
